@@ -32,11 +32,11 @@ public class UserDao {
 	}
 	
 	//회원정보 수정 폼 -> 회원정보 가져오기
-	public UserVo selectUserInfo(UserVo userVo) {
+	public UserVo selectUserInfo(int no) {
 		System.out.println("[USER DAO] selectUserInfo");
 		//System.out.println(userVo.toString());
 		
-		return sqlSession.selectOne("user.selectUserInfo", userVo);
+		return sqlSession.selectOne("user.selectUserInfo", no);
 	}
 	
 	//회원정보 수정

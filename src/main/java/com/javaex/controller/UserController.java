@@ -86,7 +86,7 @@ public class UserController {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		//UserVo authUserInfo = userDao.selectUserInfo(authUser);
 		//System.out.println("controller : " +authUserInfo.toString());
-		model.addAttribute("authUserInfo", userDao.selectUserInfo(authUser));
+		model.addAttribute("authUserInfo", userDao.selectUserInfo(authUser.getNo()));
 		
 		return "user/modifyForm";
 	}
