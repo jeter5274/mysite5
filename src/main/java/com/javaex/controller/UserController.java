@@ -64,11 +64,17 @@ public class UserController {
 			session.setAttribute("authUser", authUser);
 			
 			return "redirect:/";
-		}
+		}		
+	}
+	
+	//로그아웃
+	@RequestMapping(value="/logout", method = {RequestMethod.GET, RequestMethod.POST})
+	public String logout(HttpSession session) {
+		System.out.println("/user/logout");
 		
+		session.removeAttribute("authUser");
+		session.invalidate();
 		
-		
-		
-		
+		return "redirect:/";
 	}
 }
