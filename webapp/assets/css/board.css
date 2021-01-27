@@ -1,0 +1,251 @@
+@charset "UTF-8";
+/****************************************************************/
+/* 게시판 공통 ***************************************************/
+/****************************************************************/
+#board table {
+    width: 820px;
+    border-collapse: collapse; 
+}
+
+/* 폼요소 그룹 */
+#board .form-group {
+    padding: 5px 0px 5px 0px;
+}
+
+/****************************************************************/
+/* 게시판 리스트 ************************************************/
+/****************************************************************/
+/* 검색버튼 */
+#board #list #btn_search {
+	padding: 3px 10px 3px 10px;
+}
+
+/* 게시판 table */
+#board #list table>thead>tr {
+    border-top: 2px solid #808080; 
+    border-bottom: 2px solid #808080;
+    background-color: #DDDDDD; 
+    padding: 0px;
+}
+
+#board #list table>thead>tr>th {
+    padding: 10px 0px 10px 0px;
+    font-weight: bold; 
+}
+
+#board #list table>tbody>tr { 
+    border-bottom: 1px solid #808080;
+}
+
+#board #list table>tbody>tr:hover { 
+	background-color: #cbf77b; 
+}
+
+#board #list table>tbody>tr>td {
+    padding: 10px 0px 10px 0px;
+}
+
+/* 게시판 페이징 */
+#board #list #paging {
+	margin: 0px auto;
+	width: 310px;
+}
+
+#board #list #paging ul {margin: 10px 5px 10px 5px;}
+#board #list #paging ul>li{
+	float: left;
+	margin: 0px 8px 0px 8px;
+}
+
+#board #list #paging ul>li.active{
+	font-size: 14px;
+	font-weight: bold;
+}
+
+/* 글쓰기 버튼 */
+#board #list #btn_write {
+	border: 1px solid #A6A6A6;
+	border-radius: 2px;
+	background-color: #E5E5E5;
+	padding: 5px 10px 5px 10px;
+	font-size: 14px;
+	float: right;
+}
+
+/****************************************************************/
+/* 게시판 글쓰기 ************************************************/
+/****************************************************************/
+#board #writeForm {
+	text-align: left;
+}
+
+/* 폼태그 라벨(제목) */
+#board #writeForm .form-group .form-text {
+    display: inline-block;  /* 인라인 요소 가로폭을 주려고 */
+    width: 30px;
+    text-align: left;
+    margin-right: 20px;
+}
+
+/* 폼태그(제목) */
+#board #writeForm .form-group #txt-title {
+    width: 761px;
+}
+
+
+/* 폼태그(내용) */
+#board #writeForm .form-group #txt-content {
+    width: 816px;
+    height: 400px;
+}
+
+/* 등록 버튼 */
+#board #writeForm #btn_add {
+	border: 1px solid #A6A6A6;
+	border-radius: 2px;
+	background-color: #E5E5E5;
+	padding: 5px 20px 5px 20px;
+	margin: 0px 0px 0px 10px;
+	font-size: 14px;
+	float: right;
+	cursor: pointer;
+	
+}
+
+/* 취소 버튼 */
+#board #writeForm #btn_cancel {
+	border: 1px solid #A6A6A6;
+	border-radius: 2px;
+	background-color: #E5E5E5;
+	padding: 5px 20px 5px 20px;
+	margin: 0px 0px 0px 10px;
+	font-size: 14px;
+	float: right;
+	cursor: pointer;
+}
+
+
+
+/****************************************************************/
+/* 게시판 글수정 ************************************************/
+/****************************************************************/
+#board #modifyForm {
+	text-align: left;
+}
+
+
+/* 폼태그 라벨 */
+#board #modifyForm .form-group .form-text {
+    display: inline-block;  /* 인라인 요소 가로폭을 주려고 */
+    width: 60px;
+    text-align: left;
+    margin-right: 0px;
+}
+
+/* 작성자, 조회수, 작성일 */
+#board #modifyForm .form-group .form-value {
+    font-weight: bold;
+}
+
+
+/* 폼태그(제목) */
+#board #modifyForm .form-group #txt-title {
+    width: 749px;
+}
+
+/* 폼태그(내용) */
+#board #modifyForm .form-group #txt-content {
+    width: 816px;
+    height: 400px;
+}
+
+
+/* 수정 버튼 */
+#board #modifyForm #btn_modify {
+	border: 1px solid #A6A6A6;
+	border-radius: 2px;
+	background-color: #E5E5E5;
+	padding: 5px 20px 5px 20px;
+	margin: 0px 0px 0px 10px;
+	font-size: 14px;
+	float: right;
+	cursor: pointer;
+	
+}
+
+/* 취소 버튼 */
+#board #modifyForm #btn_cancel {
+	border: 1px solid #A6A6A6;
+	border-radius: 2px;
+	background-color: #E5E5E5;
+	padding: 5px 20px 5px 20px;
+	margin: 0px 0px 0px 10px;
+	font-size: 14px;
+	float: right;
+	cursor: pointer;
+}
+
+
+/****************************************************************/
+/* 게시판 글읽기 ************************************************/
+/****************************************************************/
+#board #read {
+	text-align: left;
+}
+
+
+/* 폼태그 라벨 */
+#board #read .form-group .form-text {
+    display: inline-block;  /* 인라인 요소 가로폭을 주려고 */
+    width: 60px;
+    text-align: left;
+    margin-right: 0px;
+}
+
+/* 작성자, 조회수, 작성일 */
+#board #read .form-group .form-value {
+    font-weight: bold;
+}
+
+
+/* 폼태그(제목) */
+#board #modifyForm .form-group #txt-title {
+    width: 749px;
+}
+
+/* 폼태그(내용) */
+#board #read #txt-content {
+	margin: 10px 0px 10px 0px;
+	padding: 10px 10px 10px 10px;
+    border-top: 1px solid #A6A6A6;
+    border-bottom: 1px solid #A6A6A6;
+}
+
+
+/* 수정 버튼 */
+#board #read #btn_modify {
+	border: 1px solid #A6A6A6;
+	border-radius: 2px;
+	background-color: #E5E5E5;
+	padding: 5px 20px 5px 20px;
+	margin: 0px 0px 0px 10px;
+	font-size: 14px;
+	float: right;
+	cursor: pointer;
+	
+}
+
+/* 목록 버튼 */
+#board #read #btn_list {
+	border: 1px solid #A6A6A6;
+	border-radius: 2px;
+	background-color: #E5E5E5;
+	padding: 5px 20px 5px 20px;
+	margin: 0px 0px 0px 10px;
+	font-size: 14px;
+	float: right;
+}
+
+
+
+

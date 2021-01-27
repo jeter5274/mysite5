@@ -1,0 +1,119 @@
+@charset "UTF-8";
+/****************************************************************/
+/* 회원 입력폼 공통 ***************************************************/
+/****************************************************************/
+
+/* 회원가입 폼요소그룹(라벨+폼요소) */
+#user .form-group {
+	padding: 10px 5px 10px 5px;
+    text-align: left;
+}
+
+/* 폼태그 라벨 */
+#user .form-group .form-text {
+    display: inline-block;  /* 인라인 요소 가로폭을 주려고 */
+    width: 150px;
+    text-align: right;
+    margin-right: 20px;
+}
+
+/****************************************************************/
+/* 회원가입폼 ***************************************************/
+/****************************************************************/
+
+/* 회원가입 폼 박스 */
+#user #joinForm {
+	width: 500px; 
+	border: 0.5px solid #b0b0b0;
+	margin: 0px auto;
+	padding: 30px 10px 30px 10px;
+}
+
+
+/* 성별 */
+#user #joinForm .form-group input[type="radio"] { margin-right: 10px;}
+
+/* 회원가입 버튼영역 */
+#user #joinForm .button-area {
+	margin: 30px 0px 0px 0px;
+	text-align: center;
+}
+
+/* 회원가입 버튼 */
+ #user #joinForm .button-area button {
+    width: 100px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+
+/****************************************************************/
+/* 회원가입성공 ***************************************************/
+/****************************************************************/
+
+/* 회원가입 성공 외각라인 */
+#user #joinOK {
+	width: 500px; 
+	height: 200px;
+	border: 0.5px solid #b0b0b0;
+	margin: 0px auto;
+	padding: 60px 10px 0px 10px;
+}
+ 
+
+/****************************************************************/
+/* 로그인폼 ***************************************************/
+/****************************************************************/
+
+/* 로그인폼 외각라인 */
+#user #loginForm {
+	width: 500px; 
+	border: 0.5px solid #b0b0b0;
+	margin: 0px auto;
+	padding: 30px 10px 30px 10px;
+} 
+
+
+/* 로그인 버튼영역 */
+#user #loginForm .button-area {
+	margin: 30px 0px 0px 0px;
+	text-align: center;
+}
+
+/* 로그인 버튼 */
+#user #loginForm .button-area button {
+    width: 100px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+
+/****************************************************************/
+/* 회원정보 수정폼 **********************************************/
+/****************************************************************/
+
+/* 회원정보수정 외각라인 */
+#user #modifyForm {
+	width: 500px; 
+	border: 0.5px solid #b0b0b0;
+	margin: 0px auto;
+	padding: 30px 10px 30px 10px;
+} 
+
+/* 회원정보수정 성별 */
+#user #modifyForm .form-group input[type="radio"] { margin-right: 10px;}
+
+
+/* 회원정보수정 버튼영역 */
+#user #modifyForm .button-area {
+	margin: 30px 0px 0px 0px;
+	text-align: center;
+}
+
+/* 회원정보수정 버튼 */
+#user #modifyForm .button-area button {
+    width: 100px;
+    padding: 5px;
+    cursor: pointer;
+}
+

@@ -1,0 +1,68 @@
+@charset "UTF-8";
+/****************************************************************/
+/* 방명록 공통 ***************************************************/
+/****************************************************************/
+#guestbook table {
+    width: 100%;
+    border-collapse: collapse; 
+}
+
+#guestbook td, #guestbook th { 
+    border: 1px solid #808080;
+    padding: 5px 0px 5px 0px ;
+}
+
+
+/****************************************************************/
+/* 방명록 글쓰기 폼 *********************************************/
+/****************************************************************/
+/* 방명록 폼(상단) */
+#guestbook #guestAdd {margin: 0px 0px 30px 0px;}
+
+#guestbook #guestAdd input[type="text"]{width: 96%; }
+#guestbook #guestAdd input[type="password"]{width: 96%; }
+#guestbook #guestAdd textarea {width: 98.5%; height:150px;}
+
+/* 방명록 버튼영역 */
+#guestbook #guestAdd .button-area {
+	margin: 30px 0px 0px 0px;
+	text-align: center;
+}
+
+/* 방명록 저장 버튼 */
+#guestbook #guestAdd button {
+    width: 100px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+/****************************************************************/
+/* 방명록 리스트 ************************************************/
+/****************************************************************/
+/* 방명록(하단) */
+#guestbook .guestRead {margin: 0px 0px 10px 0px;}
+
+#guestbook .guestRead td, 
+#guestbook .guestRead th {
+	padding: 10px 10px 10px 10px ;
+}
+
+
+/****************************************************************/
+/* 방명록 삭제폼(비밀번호)***************************************/
+/****************************************************************/
+#guestbook #guestDelete td, 
+#guestbook #guestDelete th {
+	padding: 5px 0px 5px 0px ;
+}
+
+#guestbook #guestDelete input[type="password"]{width: 96%; }
+
+/* 방명록 삭제 버튼 */
+#guestbook #guestDelete button {
+    width: 100px;
+    height: 30px;
+    padding: 0px 5px 0px 5px;
+    margin: 0px 0px 0px 10px;
+    cursor: pointer;
+}
