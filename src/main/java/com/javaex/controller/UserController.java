@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,9 +31,9 @@ public class UserController {
 	@RequestMapping(value = "/join", method = { RequestMethod.GET, RequestMethod.POST })
 	public String join(@ModelAttribute UserVo userVo) {
 		System.out.println("/user/join");
-		System.out.println(userVo.toString());
+		//System.out.println(userVo.toString());
 
-		int count = userDao.insert(userVo);
+		userDao.insert(userVo);
 
 		return "user/joinOk";
 	}
@@ -50,10 +51,10 @@ public class UserController {
 	public String login(@ModelAttribute UserVo userVo, HttpSession session) {
 		System.out.println("/user/login");
 		
-		System.out.println(userVo.toString());
+		//System.out.println(userVo.toString());
 		
 		UserVo authUser = userDao.selectUser(userVo);
-		System.out.println("controller : " +authUser);
+		//System.out.println("controller : " +authUser);
 		
 		if(authUser == null) { //실패했을 때
 			
@@ -74,6 +75,32 @@ public class UserController {
 		
 		session.removeAttribute("authUser");
 		session.invalidate();
+		
+		return "redirect:/";
+	}
+	
+	//회원정보 수정 폼
+	@RequestMapping(value = "/modiForm", method= {RequestMethod.GET, RequestMethod.POST})
+	public String modiForm(HttpSession session, Model model) {
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		//UserVo authUserInfo = userDao.selectUserInfo(authUser);
+		//System.out.println("controller : " +authUserInfo.toString());
+		model.addAttribute("authUserInfo", userDao.selectUserInfo(authUser));
+		
+		return "user/modifyForm";
+	}
+	
+	//회원정보 수정
+	@RequestMapping(value = "/modify", method= {RequestMethod.GET, RequestMethod.POST})
+	public String modify(@ModelAttribute UserVo userVo, HttpSession session) {
+		
+		userVo.setNo(((UserVo)session.getAttribute("authUser")).getNo());
+		//System.out.println(userVo.toString());
+		
+		userDao.updateUser(userVo);
+		
+		((UserVo)session.getAttribute("authUser")).setName(userVo.getName());
 		
 		return "redirect:/";
 	}

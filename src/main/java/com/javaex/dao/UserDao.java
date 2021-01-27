@@ -16,7 +16,7 @@ public class UserDao {
 	public int insert(UserVo userVo) {
 		
 		System.out.println("[USER DAO] insert");
-		System.out.println(userVo.toString());
+		//System.out.println(userVo.toString());
 		
 		int count = sqlSession.insert("user.insert", userVo);
 		
@@ -26,8 +26,24 @@ public class UserDao {
 	//로그인 -> 회원정보 가져오기
 	public UserVo selectUser(UserVo userVo) {
 		System.out.println("[USER DAO] selectUser");
-		System.out.println(userVo.toString());
+		//System.out.println(userVo.toString());
 		
 		return sqlSession.selectOne("user.selectUser", userVo);
+	}
+	
+	//회원정보 수정 폼 -> 회원정보 가져오기
+	public UserVo selectUserInfo(UserVo userVo) {
+		System.out.println("[USER DAO] selectUserInfo");
+		//System.out.println(userVo.toString());
+		
+		return sqlSession.selectOne("user.selectUserInfo", userVo);
+	}
+	
+	//회원정보 수정
+	public int updateUser(UserVo userVo) {
+		System.out.println("[USER DAO] updateUser");
+		//System.out.println(userVo.toString());
+		
+		return sqlSession.update("user.updateUser", userVo);
 	}
 }
