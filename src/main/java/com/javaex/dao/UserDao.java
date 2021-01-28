@@ -23,7 +23,7 @@ public class UserDao {
 		return count;
 	}
 	
-	//로그인 -> 회원정보 가져오기
+	//로그인 -> 회원정보 가져오기(매개변수 UserVo)
 	public UserVo selectUser(UserVo userVo) {
 		System.out.println("[USER DAO] selectUser");
 		//System.out.println(userVo.toString());
@@ -31,8 +31,8 @@ public class UserDao {
 		return sqlSession.selectOne("user.selectUser", userVo);
 	}
 	
-	//회원정보 수정 폼 -> 회원정보 가져오기
-	public UserVo selectUserInfo(int no) {
+	//회원정보 수정 폼 -> 회원정보 가져오기(매개변수 int)
+	public UserVo selectUser(int no) {
 		System.out.println("[USER DAO] selectUserInfo");
 		//System.out.println(userVo.toString());
 		

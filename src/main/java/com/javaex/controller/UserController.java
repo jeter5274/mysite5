@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.javaex.dao.UserDao;
+import com.javaex.service.UserService;
 import com.javaex.vo.UserVo;
 
 @Controller
@@ -17,8 +17,8 @@ import com.javaex.vo.UserVo;
 public class UserController {
 
 	@Autowired
-	private UserDao userDao;
-
+	private UserService userService;
+	
 	// 회원가입 폼
 	@RequestMapping(value = "/joinForm", method = { RequestMethod.GET, RequestMethod.POST })
 	public String joinForm() {
@@ -33,8 +33,8 @@ public class UserController {
 		System.out.println("/user/join");
 		//System.out.println(userVo.toString());
 
-		userDao.insert(userVo);
-
+		userService.join(userVo);
+		
 		return "user/joinOk";
 	}
 	
@@ -53,7 +53,7 @@ public class UserController {
 		
 		//System.out.println(userVo.toString());
 		
-		UserVo authUser = userDao.selectUser(userVo);
+		UserVo authUser = userService.login(userVo);
 		//System.out.println("controller : " +authUser);
 		
 		if(authUser == null) { //실패했을 때
@@ -86,7 +86,7 @@ public class UserController {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		//UserVo authUserInfo = userDao.selectUserInfo(authUser);
 		//System.out.println("controller : " +authUserInfo.toString());
-		model.addAttribute("authUserInfo", userDao.selectUserInfo(authUser.getNo()));
+		model.addAttribute("authUserInfo", userService.modifyForm(authUser.getNo()) );
 		
 		return "user/modifyForm";
 	}
@@ -98,7 +98,7 @@ public class UserController {
 		userVo.setNo(((UserVo)session.getAttribute("authUser")).getNo());
 		//System.out.println(userVo.toString());
 		
-		userDao.updateUser(userVo);
+		userService.modify(userVo);
 		
 		((UserVo)session.getAttribute("authUser")).setName(userVo.getName());
 		
