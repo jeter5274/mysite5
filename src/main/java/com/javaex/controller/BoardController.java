@@ -1,5 +1,7 @@
 package com.javaex.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVo;
+import com.javaex.vo.UserVo;
 
 @Controller
 @RequestMapping(value="/board")
@@ -30,10 +33,16 @@ public class BoardController {
 	
 	//글 읽기
 	@RequestMapping(value="/read", method= {RequestMethod.GET, RequestMethod.POST} )
-	public String read(@RequestParam("no") int no, Model model) {
+	public String read(@RequestParam("no") int no, @RequestParam("userNo") int userNo, HttpSession session, Model model) {
 		System.out.println("[boardController] read");
 		
-		model.addAttribute("post", boardService.read(no));
+		String hit = "up";
+		
+		if(userNo == ((UserVo)session.getAttribute("authUser")).getNo()) { //본인 글이 아닌 경우
+			hit = "hold";
+		}
+		
+		model.addAttribute("post", boardService.read(no, hit));
 		
 		return "board/read";
 	}
@@ -48,8 +57,10 @@ public class BoardController {
 	
 	//글 저장
 	@RequestMapping(value="/write", method= {RequestMethod.GET, RequestMethod.POST} )
-	public String write(@ModelAttribute BoardVo boardVo) {
+	public String write(@ModelAttribute BoardVo boardVo, HttpSession session) {
 		System.out.println("[boardController] write");
+		
+		boardVo.setUserNo(((UserVo)session.getAttribute("authUser")).getNo());
 		
 		boardService.write(boardVo);
 		

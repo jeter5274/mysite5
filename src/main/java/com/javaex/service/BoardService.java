@@ -17,9 +17,6 @@ public class BoardService {
 	@Autowired
 	private BoardDao boardDao;
 	
-	@Autowired
-	private HttpSession session;
-	
 	//글 목록
 	public List<BoardVo> getList(){
 		System.out.println("[boardService] getList");
@@ -29,16 +26,14 @@ public class BoardService {
 	}
 	
 	//글 읽기
-	public BoardVo read(int no) { //매개변수에 HttpSession을 불러오면 controller에서 호출시 매개변수를 맞춰야함
+	public BoardVo read(int no, String hit) {
 		System.out.println("[boardService] read");
 		
-		BoardVo post = boardDao.selectPost(no);
-
-		// 본인의 글이 아니면 조회수 +1
-		if(session.getAttribute("authUser") == null || post.getUserNo() != ((UserVo)session.getAttribute("authUser")).getNo()) {
-			boardDao.updateHit(no);			//DB hit +1
-			post.setHit(post.getHit()+1);	//이미 불러온 post hit+1
+		if("up".equals(hit)) {	
+			boardDao.updateHit(no);		
 		}
+		
+		BoardVo post = boardDao.selectPost(no);
 		
 		return post;
 	}
@@ -46,8 +41,6 @@ public class BoardService {
 	//글 저장
 	public int write(BoardVo boardVo) {
 		System.out.println("[boardService] write");
-		
-		boardVo.setUserNo(((UserVo)session.getAttribute("authUser")).getNo());
 		
 		return boardDao.insert(boardVo);
 	}

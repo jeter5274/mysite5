@@ -77,6 +77,11 @@ from users;
 delete users
 where no = 2;
 
+--수정
+update users
+set name = '강호동'
+where no=6;
+
 
 /******** mysite- board ********/
 
@@ -155,3 +160,95 @@ where no = 1;
 --글삭제
 delete board
 where no = 3;
+
+/******** mysite- rboard ********/
+
+--테이블/시퀀스 삭제
+drop table rborad;
+drop sequence seq_rboard_no;
+
+--테이블 생성
+create table rboard(
+    no number,
+    user_no number not null,
+    title varchar2(500),
+    content varchar2(4000),
+    hit number default 0,
+    reg_date date,
+    group_no number,
+    order_no number,
+    depth number,
+    primary key(no),
+    constraint seq_rboard foreign key(user_no) references users(no) 
+);
+
+--시퀀스 생성
+create sequence seq_rboard_no
+increment by 1
+start with 1
+nocache;
+
+--데이터 삽입
+insert into rboard values(seq_rboard_no.nextval, 1, '제목', '내용', default, sysdate, 1, 1, 0);
+insert into rboard values(seq_rboard_no.nextval, 2, '타이틀', '콘텐트', default, sysdate, 2, 1, 0);
+insert into rboard values(seq_rboard_no.nextval, 3, '회식합시다', '회식합시다', default, sysdate, 3, 1, 0);
+insert into rboard values(seq_rboard_no.nextval, 4, '봄입니다.', '봄이야', default, sysdate, 4, 1, 0);
+insert into rboard values(seq_rboard_no.nextval, 5, '어디서요1?', '서울 경기?', default, sysdate, 3, 4, 1);
+insert into rboard values(seq_rboard_no.nextval, 6, '어디서요2?', '서울에서하자', default, sysdate, 3, 2, 1);
+insert into rboard values(seq_rboard_no.nextval, 9, '어시서요2-1?', '서울 좋지', default, sysdate, 3, 3, 2);
+
+--전체 셀렉트
+select  rb.no,
+        rb.user_no userNo,
+        rb.title,
+        rb.content,
+        rb.hit,
+        to_char(rb.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+        rb.group_no groupNo,
+        rb.order_no orderNo,
+        rb.depth,
+        us.name writer
+from rboard rb left join users us
+on rb.user_no = us.no
+order by group_no desc, order_no asc;
+
+--커밋
+commit;
+
+--수정
+update rboard
+set group_no = 2
+where no = 2;
+
+--게시글 1개
+--전체 셀렉트
+select  rb.no,
+        rb.user_no userNo,
+        rb.title,
+        rb.content,
+        rb.hit,
+        to_char(rb.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+        rb.group_no groupNo,
+        rb.order_no orderNo,
+        rb.depth,
+        us.name writer
+from rboard rb left join users us
+on rb.user_no = us.no
+where rb.no = 1;
+
+update rboard
+set hit = hit+1
+where no =1;
+
+
+
+
+
+
+
+
+
+
+
+
+
