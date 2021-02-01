@@ -164,7 +164,7 @@ where no = 3;
 /******** mysite- rboard ********/
 
 --테이블/시퀀스 삭제
-drop table rborad;
+drop table rboard;
 drop sequence seq_rboard_no;
 
 --테이블 생성
@@ -197,6 +197,11 @@ insert into rboard values(seq_rboard_no.nextval, 5, '어디서요1?', '서울 �
 insert into rboard values(seq_rboard_no.nextval, 6, '어디서요2?', '서울에서하자', default, sysdate, 3, 2, 1);
 insert into rboard values(seq_rboard_no.nextval, 9, '어시서요2-1?', '서울 좋지', default, sysdate, 3, 3, 2);
 
+insert into rboard values(seq_rboard_no.nextval, 9, 'test', 'test', default, sysdate, seq_rboard_no.currval, 1, 0);
+
+--커밋
+commit;
+
 --전체 셀렉트
 select  rb.no,
         rb.user_no userNo,
@@ -212,16 +217,17 @@ from rboard rb left join users us
 on rb.user_no = us.no
 order by group_no desc, order_no asc;
 
---커밋
-commit;
+
+
+--롤백
+rollback;
 
 --수정
 update rboard
 set group_no = 2
 where no = 2;
 
---게시글 1개
---전체 셀렉트
+--게시글 1개 셀렉트
 select  rb.no,
         rb.user_no userNo,
         rb.title,
@@ -236,11 +242,26 @@ from rboard rb left join users us
 on rb.user_no = us.no
 where rb.no = 1;
 
+--조회수 +1
 update rboard
 set hit = hit+1
 where no =1;
 
+--게시글 그룹의 orderNo +1
+update rboard
+set order_no = order_no+1
+where group_no = 3
+and order_no >= 2;
 
+--글 수정
+update rboard
+set title = '타이틀이지롱',
+    content = '콘텐트이지롱'
+where no = 1;
+
+--삭제
+delete rboard
+where no = 11;
 
 
 

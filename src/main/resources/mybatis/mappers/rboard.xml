@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rboard">
+
+	<!-- 게시판 리스트 -->
+	<select id="selectList" resultType="com.javaex.vo.RboardVo">
+		<![CDATA[
+			select  rb.no,
+        			rb.user_no userNo,
+        			rb.title,
+        			rb.content,
+        			rb.hit,
+        			to_char(rb.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+        			rb.group_no groupNo,
+        			rb.order_no orderNo,
+        			rb.depth,
+        			us.name writer
+			from rboard rb left join users us
+			on rb.user_no = us.no
+			order by group_no desc, order_no asc
+		]]>
+	</select>
+	
+	<!-- 게시글 -->
+	<select id="selectPost" parameterType="int" resultType="com.javaex.vo.RboardVo">
+		<![CDATA[
+			select  rb.no,
+        			rb.user_no userNo,
+        			rb.title,
+        			rb.content,
+        			rb.hit,
+        			to_char(rb.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+        			rb.group_no groupNo,
+        			rb.order_no orderNo,
+        			rb.depth,
+        			us.name writer
+			from rboard rb left join users us
+			on rb.user_no = us.no
+			where rb.no = #{no}
+		]]>
+	</select>
+		
+	<!-- 조회수 증가 -->
+	<update id="updateHit" parameterType="int">
+		<![CDATA[
+			update rboard
+			set hit = hit+1
+			where no = #{no}
+		]]>
+	</update>
+	
+	<!-- 새글 등록 -->
+	<insert id="insertNew" parameterType="com.javaex.vo.RboardVo">
+		<![CDATA[
+			insert into rboard 
+			values(seq_rboard_no.nextval,
+				   #{userNo},
+				   #{title},
+				   #{content},
+				   default,
+				   sysdate,
+				   seq_rboard_no.currval,
+				   1,
+				   0
+			)
+		]]>
+	</insert>
+
+	<!-- 답글 등록 -->
+	<insert id="insertReply" parameterType="com.javaex.vo.RboardVo">
+		<![CDATA[
+			insert into rboard
+			values(seq_rboard_no.nextval,
+				   #{userNo},
+				   #{title},
+				   #{content},
+				   default,
+				   sysdate,
+				   #{groupNo},
+				   #{orderNo},
+				   #{depth}
+			)
+		]]>
+	</insert>
+	
+	<!-- 그룹 order + 1 -->
+	<update id="updateGroup" parameterType="int">
+		<![CDATA[
+			update rboard
+			set order_no = order_no + 1
+			where group_no = #{groupNo}
+			and order_no >= #{orderNo}
+		]]>
+	</update>
+	
+	<!-- 글 수정 -->
+	<update id="updatePost" parameterType="com.javaex.vo.RboardVo">
+		<![CDATA[
+			update rboard
+			set title = #{title},
+    			content = #{content}
+			where no = #{no}
+		]]>
+	</update>
+	
+	<!-- 글 삭제 -->
+	<delete id="delete" parameterType="int">
+		<![CDATA[
+
+		]]>
+	</delete>
+</mapper>
