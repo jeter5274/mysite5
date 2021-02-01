@@ -36,10 +36,11 @@ public class BoardController {
 	public String read(@RequestParam("no") int no, @RequestParam("userNo") int userNo, HttpSession session, Model model) {
 		System.out.println("[boardController] read");
 		
-		String hit = "up";
+		String hit = null;
 		
-		if(userNo == ((UserVo)session.getAttribute("authUser")).getNo()) { //본인 글이 아닌 경우
-			hit = "hold";
+		if(session.getAttribute("authUser") == null || userNo != ((UserVo)session.getAttribute("authUser")).getNo()) { 
+			// 로그인이 안되어 있거나 본인 글이 아닌 경우
+			hit = "up";
 		}
 		
 		model.addAttribute("post", boardService.read(no, hit));

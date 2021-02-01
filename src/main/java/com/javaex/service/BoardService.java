@@ -2,14 +2,11 @@ package com.javaex.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaex.dao.BoardDao;
 import com.javaex.vo.BoardVo;
-import com.javaex.vo.UserVo;
 
 @Service
 public class BoardService {
