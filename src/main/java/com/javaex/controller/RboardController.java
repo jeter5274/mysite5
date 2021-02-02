@@ -103,4 +103,14 @@ public class RboardController {
 		
 		return "redirect:/rboard/list";
 	}
+	
+	//게시글 검색
+	@RequestMapping(value="/search")
+	public String search(@RequestParam("keyword") String keyword, Model model) {
+		System.out.println("[RboardController] search");
+	
+		model.addAttribute("rboardList", rboardService.search(keyword));
+
+		return "rboard/list";
+	}
 }

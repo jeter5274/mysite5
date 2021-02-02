@@ -105,4 +105,10 @@ public class RboardDao {
 		return sqlSession.selectOne("rboard.selectChkReply", rboardVo);
 	}
 	
+	//글검색
+	public List<RboardVo> selectSearchList(String keyword) {
+		System.out.println("[RboardDao] selectSearchList");
+
+		return sqlSession.selectList("rboard.selectSearchList", keyword);
+	}
 }

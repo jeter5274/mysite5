@@ -287,3 +287,23 @@ select  no,
 from rboard
 where del_status = 'delete'
 order by group_no asc, order_no desc, depth desc;
+
+
+select  rb.no,
+        rb.user_no userNo,
+        rb.title,
+        rb.content,
+        rb.hit,
+        to_char(rb.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+        rb.group_no groupNo,
+        rb.order_no orderNo,
+        rb.depth,
+        us.name writer,
+        rb.del_status delStatus
+from rboard rb left join users us
+on rb.user_no = us.no
+where rb.title like '%정%'
+or us.name like '%정%'
+and rb.del_status is null;
+
+

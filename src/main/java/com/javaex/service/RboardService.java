@@ -119,4 +119,13 @@ public class RboardService {
 		
 		return count;
 	}
+	
+	//게시글 검색 - 제목/글쓴이
+	public List<RboardVo> search(String keyword){
+		System.out.println("[RboardService] search");
+		
+		keyword = "%"+keyword+"%";
+		
+		return rboardDao.selectSearchList(keyword);
+	}
 }
