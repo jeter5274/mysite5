@@ -15,7 +15,8 @@
         			rb.group_no groupNo,
         			rb.order_no orderNo,
         			rb.depth,
-        			us.name writer
+        			us.name writer,
+        			rb.del_status delStatus
 			from rboard rb left join users us
 			on rb.user_no = us.no
 			order by group_no desc, order_no asc
@@ -34,7 +35,8 @@
         			rb.group_no groupNo,
         			rb.order_no orderNo,
         			rb.depth,
-        			us.name writer
+        			us.name writer,
+        			rb.del_status delStatus
 			from rboard rb left join users us
 			on rb.user_no = us.no
 			where rb.no = #{no}
@@ -62,7 +64,8 @@
 				   sysdate,
 				   seq_rboard_no.currval,
 				   1,
-				   0
+				   0,
+				   default
 			)
 		]]>
 	</insert>
@@ -79,13 +82,14 @@
 				   sysdate,
 				   #{groupNo},
 				   #{orderNo},
-				   #{depth}
+				   #{depth},
+				   default
 			)
 		]]>
 	</insert>
 	
 	<!-- 그룹 order + 1 -->
-	<update id="updateGroup" parameterType="int">
+	<update id="updateGroup" parameterType="com.javaex.vo.RboardVo">
 		<![CDATA[
 			update rboard
 			set order_no = order_no + 1
@@ -104,10 +108,92 @@
 		]]>
 	</update>
 	
+	<!-- 다음 답글 -->
+	<select id="selectNextPost" parameterType="com.javaex.vo.RboardVo" resultType="com.javaex.vo.RboardVo">
+		<![CDATA[
+			select  rb.no,
+        			rb.user_no userNo,
+        			rb.title,
+        			rb.content,
+        			rb.hit,
+        			to_char(rb.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+        			rb.group_no groupNo,
+        			rb.order_no orderNo,
+        			rb.depth,
+        			us.name writer,
+        			rb.del_status delStatus
+			from rboard rb left join users us
+			on rb.user_no = us.no
+			where group_no = #{groupNo}
+			and order_no = #{orderNo} + 1
+		]]>
+	</select>
+	
 	<!-- 글 삭제 -->
 	<delete id="delete" parameterType="int">
 		<![CDATA[
-
+			delete rboard
+			where no = #{no}
 		]]>
 	</delete>
+	
+	<!-- 글삭제시 그룹 order - 1 -->
+	<update id="updateGroupDel" parameterType="com.javaex.vo.RboardVo">
+		<![CDATA[
+			update rboard
+			set order_no = order_no - 1
+			where group_no = #{groupNo}
+			and order_no > #{orderNo}
+		]]>
+	</update>
+	
+	<!-- 글삭제 표시 -->
+	<update id="updateDelStatus" parameterType="int">
+		<![CDATA[
+			update rboard
+			set title = '삭제된 글입니다.',
+				del_status = 'delete'
+			where no = #{no}
+		]]>
+	</update>
+	
+	<!-- 삭제표시된 게시글 리스트 -->
+	<select id="selectDelList" resultType="com.javaex.vo.RboardVo">
+		<![CDATA[
+			select  no,
+        			user_no userNo,
+        			title,
+        			content,
+        			hit,
+        			to_char(reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+        			group_no groupNo,
+        			order_no orderNo,
+        			depth,
+        			del_status delStatus
+			from rboard
+			where del_status = 'delete'
+			order by group_no asc, order_no desc, depth desc
+		]]>
+	</select>
+	
+	<!-- 답글체크 -->
+	<select id="selectChkReply" parameterType="com.javaex.vo.RboardVo" resultType="com.javaex.vo.RboardVo">
+		<![CDATA[
+			select  rb.no,
+        			rb.user_no userNo,
+        			rb.title,
+        			rb.content,
+        			rb.hit,
+        			to_char(rb.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+        			rb.group_no groupNo,
+        			rb.order_no orderNo,
+        			rb.depth,
+        			us.name writer,
+        			rb.del_status delStatus
+			from rboard rb left join users us
+			on rb.user_no = us.no
+			where order_no = #{orderNo} + 1
+			and depth = #{depth} + 1
+		]]>
+	</select>
 </mapper>

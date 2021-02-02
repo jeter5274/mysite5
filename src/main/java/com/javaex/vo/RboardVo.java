@@ -13,6 +13,7 @@ public class RboardVo {
 	private int orderNo;
 	private int depth;
 	private String writer;
+	private String delStatus;
 	
 	//생성자 생략 - default
 	
@@ -77,14 +78,19 @@ public class RboardVo {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
+	public String getDelStatus() {
+		return delStatus;
+	}
+	public void setDelStatus(String delStatus) {
+		this.delStatus = delStatus;
+	}
 	
-	//메소드 일반
 	@Override
 	public String toString() {
-		return "Rboard [no=" + no + ", userNo=" + userNo + ", title=" + title + ", content=" + content + ", hit=" + hit
-				+ ", regDate=" + regDate + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth
-				+ ", writer=" + writer + "]";
+		return "RboardVo [no=" + no + ", userNo=" + userNo + ", title=" + title + ", content=" + content + ", hit="
+				+ hit + ", regDate=" + regDate + ", groupNo=" + groupNo + ", orderNo=" + orderNo + ", depth=" + depth
+				+ ", writer=" + writer + ", delStatus=" + delStatus + "]";
 	}
-
+	
 	
 }

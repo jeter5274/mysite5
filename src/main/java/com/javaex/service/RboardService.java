@@ -67,4 +67,56 @@ public class RboardService {
 		
 		return rboardDao.updatePost(rboardVo);
 	}
+	
+	//글 삭제
+	//답글이 있을 경우 삭제된 글입니다. 라고 표시, 없는 경우 삭제 - 단, 부모글이 삭제된 상태면 같이 삭제
+	public int remove(RboardVo rboardVo) {
+		System.out.println("[RboardService] remove");
+		int count=0;
+		RboardVo nextVo = rboardDao.selectNextPost(rboardVo);
+		
+		if(nextVo == null) {
+			//답글이 없으면 삭제
+			count += rboardDao.delete(rboardVo.getNo());
+		}else {
+			//답글이 있을 경우
+			if(rboardVo.getDepth() > nextVo.getDepth()) {
+				
+				//답글이 나의 답글이 아닌 경우(조부모의 답글이 2개일 경우?)
+				count += rboardDao.delete(rboardVo.getNo());
+				
+				//order 정리
+				rboardDao.updateGroupDel(rboardVo);
+				
+			}else {
+				//나의 답글인 경우 삭제상태로 변경
+				rboardDao.updateDelStatus(rboardVo.getNo());
+			}
+		}
+		
+		//삭제상태의 글들을 관리(답글이 지워져서 없어진 경우 삭제)
+		count += manageDelPost();
+		
+		return count;
+	}
+	
+	//삭제상태의 글에 답글이 없을 경우 삭제
+	public int manageDelPost() {
+		System.out.println("[RboardService] manageDelPost");
+		
+		int count=0;
+		
+		//삭제상태인 글 목록을 불러옴
+		List<RboardVo> delList = rboardDao.selectDelList();
+		
+		for(int i = 0; i<delList.size(); i++) {
+			
+			//삭제상태의 글의 답글이 없을 경우 삭제함
+			if(rboardDao.selectChkReply(delList.get(i)) == null){
+				count += rboardDao.delete(delList.get(i).getNo());
+			}
+		}
+		
+		return count;
+	}
 }

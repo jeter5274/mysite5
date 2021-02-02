@@ -178,6 +178,7 @@ create table rboard(
     group_no number,
     order_no number,
     depth number,
+    del_status varchar2(50) default null,
     primary key(no),
     constraint seq_rboard foreign key(user_no) references users(no) 
 );
@@ -189,18 +190,21 @@ start with 1
 nocache;
 
 --데이터 삽입
-insert into rboard values(seq_rboard_no.nextval, 1, '제목', '내용', default, sysdate, 1, 1, 0);
-insert into rboard values(seq_rboard_no.nextval, 2, '타이틀', '콘텐트', default, sysdate, 2, 1, 0);
-insert into rboard values(seq_rboard_no.nextval, 3, '회식합시다', '회식합시다', default, sysdate, 3, 1, 0);
-insert into rboard values(seq_rboard_no.nextval, 4, '봄입니다.', '봄이야', default, sysdate, 4, 1, 0);
-insert into rboard values(seq_rboard_no.nextval, 5, '어디서요1?', '서울 경기?', default, sysdate, 3, 4, 1);
-insert into rboard values(seq_rboard_no.nextval, 6, '어디서요2?', '서울에서하자', default, sysdate, 3, 2, 1);
-insert into rboard values(seq_rboard_no.nextval, 9, '어시서요2-1?', '서울 좋지', default, sysdate, 3, 3, 2);
+insert into rboard values(seq_rboard_no.nextval, 1, '제목', '내용', default, sysdate, 1, 1, 0, default);
+insert into rboard values(seq_rboard_no.nextval, 2, '타이틀', '콘텐트', default, sysdate, 2, 1, 0, default);
+insert into rboard values(seq_rboard_no.nextval, 3, '회식합시다', '회식합시다', default, sysdate, 3, 1, 0, default);
+insert into rboard values(seq_rboard_no.nextval, 4, '봄입니다.', '봄이야', default, sysdate, 4, 1, 0, default);
+insert into rboard values(seq_rboard_no.nextval, 5, '어디서요1?', '서울 경기?', default, sysdate, 3, 4, 1, default);
+insert into rboard values(seq_rboard_no.nextval, 6, '어디서요2?', '서울에서하자', default, sysdate, 3, 2, 1, default);
+insert into rboard values(seq_rboard_no.nextval, 9, '어시서요2-1?', '서울 좋지', default, sysdate, 3, 3, 2, default);
 
-insert into rboard values(seq_rboard_no.nextval, 9, 'test', 'test', default, sysdate, seq_rboard_no.currval, 1, 0);
+insert into rboard values(seq_rboard_no.nextval, 9, 'test', 'test', default, sysdate, seq_rboard_no.currval, 1, 0, default);
 
 --커밋
 commit;
+
+select *
+from rboard;
 
 --전체 셀렉트
 select  rb.no,
@@ -263,13 +267,23 @@ where no = 1;
 delete rboard
 where no = 11;
 
+--삭제 글 표시
+update rboard
+set title = '삭제된 글입니다.',
+del_status = 'delete'
+where no = 1;
 
-
-
-
-
-
-
-
-
-
+--삭제상태의 글목록을 order_no desc, depth desc로 정렬해서 depth가 큰 경우 부터 삭제할 수 있도록 함
+select  no,
+        user_no userNo,
+        title,
+        content,
+        hit,
+        to_char(reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+        group_no groupNo,
+        order_no orderNo,
+        depth,
+        del_status delStatus
+from rboard
+where del_status = 'delete'
+order by group_no asc, order_no desc, depth desc;

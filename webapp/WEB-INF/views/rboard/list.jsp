@@ -61,20 +61,39 @@
 								<tr>
 									<td>${rboardVo.no }</td>
 									<td class="text-left">
-										<a href="${pageContext.request.contextPath }/rboard/read?no=${rboardVo.no }&userNo=${rboardVo.userNo }">
-											<c:forEach var="i" begin="1" end="${rboardVo.depth}" step="1">
-												&nbsp; &nbsp; &nbsp; &nbsp;
-											</c:forEach>
-											${rboardVo.title}
-
-										</a>
+										<c:choose>
+											<c:when test="${rboardVo.delStatus == 'delete'}">
+												${rboardVo.title}
+											</c:when>
+											<c:otherwise>
+												<a href="${pageContext.request.contextPath }/rboard/read?no=${rboardVo.no }&userNo=${rboardVo.userNo }">
+													<c:forEach var="i" begin="1" end="${rboardVo.depth}" step="1">
+														&nbsp; &nbsp; &nbsp; &nbsp;
+													</c:forEach>
+													${rboardVo.title}
+												</a>
+											</c:otherwise>
+										</c:choose>
+										
 									</td>
-									<td>${rboardVo.writer}</td>
-									<td>${rboardVo.hit}</td>
-									<td>${rboardVo.regDate}</td>
 									<td>
-										<c:if test="${rboardVo.userNo == authUser.no }">
-											<a href="${pageContext.request.contextPath }/rboard/remove?no=${rboardVo.no }">[삭제]</a>
+										<c:if test="${rboardVo.delStatus != 'delete'}">
+											${rboardVo.writer}
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${rboardVo.delStatus != 'delete'}">
+											${rboardVo.hit}
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${rboardVo.delStatus != 'delete'}">
+											${rboardVo.regDate}
+										</c:if>
+									</td>
+									<td>
+										<c:if test="${rboardVo.delStatus != 'delete' && rboardVo.userNo == authUser.no }">
+											<a href="${pageContext.request.contextPath }/rboard/remove?no=${rboardVo.no }&groupNo=${rboardVo.groupNo}&orderNo=${rboardVo.orderNo}&depth=${rboardVo.depth}">[삭제]</a>
 										</c:if>
 									</td>
 								</tr>

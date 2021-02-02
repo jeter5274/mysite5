@@ -95,5 +95,12 @@ public class RboardController {
 	}
 	
 	//글 삭제 
-	//답글이 있을 경우 삭제된 글입니다. 라고 표시, 없는경우 삭제
+	@RequestMapping(value="/remove", method = { RequestMethod.GET, RequestMethod.POST })
+	public String remove(@ModelAttribute RboardVo rboardVo) {
+		System.out.println("[RboardController] remove");
+		
+		rboardService.remove(rboardVo);
+		
+		return "redirect:/rboard/list";
+	}
 }
