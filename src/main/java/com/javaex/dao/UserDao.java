@@ -46,4 +46,11 @@ public class UserDao {
 		
 		return sqlSession.update("user.updateUser", userVo);
 	}
+	
+	//회원가입 id중복체크
+	public UserVo selectOne(String id) {
+		System.out.println("[USER DAO] selectOne : " +id);
+		
+		return sqlSession.selectOne("user.selectById", id);
+	}
 }

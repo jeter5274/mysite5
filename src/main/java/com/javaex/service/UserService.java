@@ -39,4 +39,20 @@ public class UserService {
 		
 		return userDao.updateUser(userVo);
 	}
+	
+	//회원가입 id중복체크
+	public String idcheck(String id) {
+		System.out.println("[UserService] idcheck : " + id);
+		
+		String result;
+		UserVo userVo = userDao.selectOne(id);
+		
+		if(userVo == null) { //사용할 수 있는 id
+			result = "can";
+		}else { //사용할 수 없는 id
+			result = "cant";
+		}
+		
+		return result;
+	}
 }

@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
 import com.javaex.vo.UserVo;
@@ -104,4 +106,19 @@ public class UserController {
 		
 		return "redirect:/";
 	}
+	
+	//회원가입 id 중복체크
+	@ResponseBody
+	@RequestMapping(value="/idcheck", method= {RequestMethod.GET, RequestMethod.POST})
+	public String idcheck(@RequestParam("id") String id) {
+		System.out.println("/user/idcheck");
+		System.out.println("checkid :" +id);
+
+		String result = userService.idcheck(id);
+		System.out.println(result);
+		
+		//return "redirect:/user/joinForm?result="+result;
+		return result;	//@ResponseBody -> response의 body영역에 data만 보낸다. (return 값)
+	}
 }
+ 
