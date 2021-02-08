@@ -134,7 +134,7 @@
 			url : "${pageContext.request.contextPath }/user/idcheck",		
 			type : "post",
 			/* contentType : "application/json", */
-			data : {id: uid, password: pw},				//url에 파라미터값을 입력하는 다른 방법
+			data : {id: uid},				//url에 파라미터값을 입력하는 다른 방법
 
 			dataType : "text",
 			success : function(result){
