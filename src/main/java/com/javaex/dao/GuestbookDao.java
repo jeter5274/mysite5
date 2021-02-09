@@ -31,4 +31,19 @@ public class GuestbookDao {
 		
 		return sqlSession.delete("guestbook.delete", gbVo);
 	}
+	
+	//글저장 (selectKey)
+	public void insertSelectKey(GuestbookVo gbVo) {
+		System.out.println("[GBDao] insertSelectKey");
+
+		sqlSession.insert("guestbook.insertSelectKey", gbVo);
+
+	}
+	
+	//글 1개 가져오기
+	public GuestbookVo selectOne(int no) {
+		System.out.println("[GBDao] selectOne");
+		
+		return sqlSession.selectOne("guestbook.select", no);
+	}
 }

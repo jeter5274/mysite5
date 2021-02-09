@@ -31,4 +31,17 @@ public class GuestbookService {
 		
 		return gbDao.delete(gbVo);
 	}
+	
+	//ajax 글저장
+	public GuestbookVo writeResultVo(GuestbookVo gbVo) {
+		System.out.println("[GBService] writeResultVo");
+		
+		//글저장
+		gbDao.insertSelectKey(gbVo);
+		
+		//방금 저장된 글 받아오기
+		return gbDao.selectOne(gbVo.getNo());
+	}
 }
+
+
