@@ -307,3 +307,13 @@ or us.name like '%정%'
 and rb.del_status is null;
 
 
+	select  bo.no,
+        			bo.title,
+        			bo.hit,
+        			to_char(bo.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+        			bo.user_no as userNo,
+        			us.name as writer
+			from board bo left join users us
+			on bo.user_no = us.no
+			where bo.title like '%2%'
+or us.name like '%2%';
