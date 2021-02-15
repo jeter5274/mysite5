@@ -14,7 +14,7 @@
         			us.name as writer
 			from board bo left join users us
 			on bo.user_no = us.no
-			order by bo.no asc
+			order by bo.no desc
 		]]>
 	</select>
 	
@@ -89,5 +89,87 @@
 			where bo.title like #{keyword}
 			or us.name like #{keyword}
 		]]>
+	</select>
+	
+	<!-- 게시판 리스트 + 검색 -->
+	<select id="selectList2" parameterType="String" resultType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			select  bo.no,
+        			bo.title,
+        			bo.hit,
+        			to_char(bo.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+        			bo.user_no as userNo,
+        			us.name as writer
+			from board bo, users us
+			where bo.user_no = us.no
+		]]>
+		
+		<if test="value != null and value !=''"> 
+			<![CDATA[
+				and title like '%' || #{keyword} || '%'
+			]]>
+		</if>
+		
+		<![CDATA[
+			order by no desc
+		]]>
+	</select>
+	
+	<!-- 게시판 리스트 + 검색 + 페이징-->
+	<select id="selectList3" parameterType="map" resultType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			select  r.rn,
+        			r.no,
+        			r.title,
+        			r.hit,
+        			r.regDate,
+        			r.userNo,
+        			r.writer
+			from (select rownum rn,
+						 o.no,
+						 o.title,
+						 o.hit,
+						 o.regDate,
+						 o.userNo,
+						 o.writer
+				  from (select bo.no,
+							   bo.title,
+							   bo.hit,
+							   to_char(bo.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+							   bo.user_no as userNo,
+							   us.name as writer
+						from board bo, users us
+						where bo.user_no = us.no
+		]]>
+		
+		<if test="keyword != null and keyword !=''"> 
+			<![CDATA[
+						and title like '%' || #{keyword} || '%'
+			]]>
+		</if>
+		
+		<![CDATA[
+						order by no desc
+				  ) o
+			) r
+			where r.rn >= #{startRnum}
+			and r.rn <= #{endRnum}
+		]]>
+	</select>
+	
+	<!-- 전체 글 갯수 가져오기 -->
+	<select id="selectTotalCnt" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*)
+			from board bo, users us
+			where bo.user_no = us.no
+		]]>
+		
+		<if test="value != null and value !=''"> 
+			<![CDATA[
+			and title like '%' || #{keyword} || '%'
+			]]>
+		</if>
+
 	</select>
 </mapper>

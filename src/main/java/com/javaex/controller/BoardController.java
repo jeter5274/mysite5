@@ -1,5 +1,8 @@
 package com.javaex.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +68,7 @@ public class BoardController {
 		boardVo.setUserNo(((UserVo) session.getAttribute("authUser")).getNo());
 
 		boardService.write(boardVo);
+		//boardService.addBoard(boardVo); //글 1234개 저장
 
 		return "redirect:/board/list";
 	}
@@ -106,5 +110,33 @@ public class BoardController {
 		model.addAttribute("boardList", boardService.search(keyword));
 
 		return "board/list";
+	}
+	
+	// 글목록(검색기능 포함)
+	@RequestMapping(value="/list2", method= {RequestMethod.GET, RequestMethod.POST})
+	public String list2(@RequestParam(value="keyword", required=false, defaultValue="") String keyword, Model model) {
+		System.out.println("[boardController] list2");
+		System.out.println("keyword : " +keyword);
+		 
+		List<BoardVo> boardList = boardService.getBoardList2(keyword);
+		model.addAttribute("boardList", boardList);
+		
+		return "board/list2";
+	}
+	
+	//글목록 + 검색 + 페이징
+	@RequestMapping(value="/list3", method= {RequestMethod.GET, RequestMethod.POST})
+	public String list3(@RequestParam(value="keyword", required=false, defaultValue="") String keyword,
+						@RequestParam(value="crtPage", required=false, defaultValue="1") int crtPage,
+						Model model) {
+		System.out.println("[boardController] list3");
+		//System.out.println("keyword : " +keyword);
+		//System.out.println("crtPage : " +crtPage);
+		 
+		Map<String, Object> pMap = boardService.getBoardList3(keyword, crtPage);
+		System.out.println("[boardController] " +pMap);
+		model.addAttribute("pMap", pMap);
+		
+		return "board/list3";
 	}
 }

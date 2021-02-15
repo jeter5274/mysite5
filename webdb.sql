@@ -306,14 +306,49 @@ where rb.title like '%정%'
 or us.name like '%정%'
 and rb.del_status is null;
 
+select  bo.no,
+        bo.title,
+        bo.hit,
+        to_char(bo.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+        bo.user_no as userNo,
+        us.name as writer
+from board bo, users us
+where bo.user_no = us.no
+and title like '%test%'
+order by no desc;
 
-	select  bo.no,
-        			bo.title,
-        			bo.hit,
-        			to_char(bo.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
-        			bo.user_no as userNo,
-        			us.name as writer
-			from board bo left join users us
-			on bo.user_no = us.no
-			where bo.title like '%2%'
-or us.name like '%2%';
+delete
+from board;
+
+--rownum 추가
+select  r.rn,
+        r.no,
+        r.title,
+        r.hit,
+        r.regDate,
+        r.userNo,
+        r.writer
+from (select rownum rn,
+             o.no,
+             o.title,
+             o.hit,
+             o.regDate,
+             o.userNo,
+             o.writer
+       from (select bo.no,
+                    bo.title,
+                    bo.hit,
+                    to_char(bo.reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate,
+                    bo.user_no as userNo,
+                    us.name as writer
+             from board bo, users us
+             where bo.user_no = us.no
+             
+             and title like '%1%'
+             
+             order by no desc
+       ) o
+) r
+where r.rn>=1
+and r.rn<=10;
+
