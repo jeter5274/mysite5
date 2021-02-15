@@ -79,9 +79,21 @@
 							<c:if test="${pMap.prev == true }">
 								<li><a href="${pageContext.request.contextPath }/board/list3?crtPage=${pMap.startPageBtnNo-1}&keyword=${param.keyword}">◀</a></li>
 							</c:if>
-							
+									
 							<c:forEach begin="${pMap.startPageBtnNo }" end="${pMap.endPageBtnNo }" step="1" var="page">
-								<li><a href="${pageContext.request.contextPath }/board/list3?crtPage=${page}&keyword=${param.keyword}">${page}</a></li>
+								
+								<c:choose>
+									<c:when test="${empty param.crtPage && page == 1}">
+										<li class="active"><a href="${pageContext.request.contextPath }/board/list3?crtPage=${page}&keyword=${param.keyword}">${page}</a></li>
+									</c:when>
+									<c:when test="${page == param.crtPage}">
+										<li class="active"><a href="${pageContext.request.contextPath }/board/list3?crtPage=${page}&keyword=${param.keyword}">${page}</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="${pageContext.request.contextPath }/board/list3?crtPage=${page}&keyword=${param.keyword}">${page}</a></li>
+									</c:otherwise> 
+								</c:choose>
+								
 							</c:forEach>
 							
 							<c:if test="${pMap.next == true }">

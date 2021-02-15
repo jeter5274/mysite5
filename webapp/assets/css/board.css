@@ -48,7 +48,7 @@
 /* 게시판 페이징 */
 #board #list #paging {
 	margin: 0px auto;
-	width: 310px;
+	width: 450px;
 }
 
 #board #list #paging ul {margin: 10px 5px 10px 5px;}

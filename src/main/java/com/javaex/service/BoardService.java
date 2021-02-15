@@ -109,7 +109,7 @@ public class BoardService {
 		//페이징 계산
 		////////////////////////////
 		
-		int pageBtnCount = 5;						//페이지당 버튼 갯수
+		int pageBtnCount = 10;						//페이지당 버튼 갯수
 		
 		//전체 글 갯수 구하기
 		int totalCount = boardDao.selectTotalCnt(keyword);
