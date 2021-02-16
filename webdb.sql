@@ -394,3 +394,22 @@ select  no,
         saveName,
         fileSize
 from gallery;
+
+--갤러리 리스트 셀렉
+select  ga.no,
+        ga.user_no as userNo,
+        ga.content,
+        ga.filePath,
+        ga.orgName,
+        ga.saveName,
+        ga.fileSize,
+        us.name as writer
+from gallery ga, users us
+where ga.user_no = us.no;
+
+--갤러리 글 한개 삭제
+delete gallery
+where no = 4;
+
+--롤백
+rollback;
