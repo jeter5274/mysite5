@@ -1,0 +1,180 @@
+@charset "UTF-8";
+/****************************************************************/
+/* 첨부파일 연습 ***************************************************/
+/****************************************************************/
+#file table {
+    border-collapse: collapse; 
+    border: 1px solid #A6A6A6;
+}
+
+#file td {
+	padding: 5px 5px 5px 5px;
+	font-size: 14px;
+}
+
+
+#file [type='submit'] {
+	padding: 10px 10px 10px 10px;
+}
+
+
+#file #resultImg {
+	width: 500px;
+	margin: 20px;
+}
+
+#file #btnUpload {
+	border: 1px solid #A6A6A6;
+	border-radius: 2px;
+	background-color: #E5E5E5;
+	padding: 5px 10px 5px 10px;
+	font-size: 14px;
+}
+
+
+/****************************************************************/
+/* 갤러리 리스트 ************************************************/
+/****************************************************************/
+/* 이미지업로드 버튼 */
+#gallery #btnImgUpload{
+	border: 1px solid #A6A6A6;
+	border-radius: 2px;
+	background-color: #E5E5E5;
+	padding: 10px 10px 10px 10px;
+	font-size: 14px;
+	float: right;
+}
+
+/* 이미지 전체영역 */
+#gallery #viewArea {
+	margin: 10px 0px 10px 0px;
+}
+
+/* 이미지 1개영역 */
+#gallery .view{
+	width: 200px;
+	height: 220px;
+	margin: 5px 0px 0px 5px;
+	border: 1px solid #A6A6A6;
+	float: left;
+}
+
+#gallery .imgItem{
+	width: 190px;
+	height: 190px;
+	cursor: Pointer;
+}
+
+#gallery .imgWriter{
+	font-size: 14px;
+	font-weight: bold;
+	text-align:left;
+	margin: 5px 5px 0px 5px;
+}
+
+/****************************************************************/
+/* 업로드 팝업   ************************************************/
+/****************************************************************/
+/* 회원가입 폼요소그룹(라벨+폼요소) */
+.form-group {
+	padding: 10px 5px 10px 5px;
+    text-align: left;
+}
+
+.form-group .form-text {
+    display: inline-block;  /* 인라인 요소 가로폭을 주려고 */
+    width: 80px;
+    text-align: left;
+    margin-right: 20px;
+}
+
+#addModalContent {
+	width: 450px;
+	height: 30px;
+	font-size: 14px;
+}
+
+#file {
+	display: inline;
+}
+
+****************************************************************/
+/* 이미지보기 팝업   ************************************************/
+/****************************************************************/
+
+#viewModelImg {
+	width: 500px;
+}
+
+#viewModelContent {
+	font-size: 14px;
+	font-weight: bold; 
+	margin: 10px 0px 0px 0px
+}
+
+****************************************************************/
+/* 업로드 팝업   ************************************************/
+/****************************************************************/
+
+
+
+
+
+
+/* 등록버튼 */
+#btnUpload {
+	padding: 3px 10px 3px 10px;
+}
+
+/* 게시판 table */
+#board #list table>thead>tr {
+    border-top: 2px solid #808080; 
+    border-bottom: 2px solid #808080;
+    background-color: #DDDDDD; 
+    padding: 0px;
+}
+
+#board #list table>thead>tr>th {
+    padding: 10px 0px 10px 0px;
+    font-weight: bold; 
+}
+
+#board #list table>tbody>tr { 
+    border-bottom: 1px solid #808080;
+}
+
+#board #list table>tbody>tr:hover { 
+	background-color: #cbf77b; 
+}
+
+#board #list table>tbody>tr>td {
+    padding: 10px 0px 10px 0px;
+}
+
+/* 게시판 페이징 */
+#board #list #paging {
+	margin: 0px auto;
+	width: 310px;
+}
+
+#board #list #paging ul {margin: 10px 5px 10px 5px;}
+#board #list #paging ul>li{
+	float: left;
+	margin: 0px 8px 0px 8px;
+}
+
+#board #list #paging ul>li.active{
+	font-size: 14px;
+	font-weight: bold;
+}
+
+/* 글쓰기 버튼 */
+#board #list #btn_write {
+	border: 1px solid #A6A6A6;
+	border-radius: 2px;
+	background-color: #E5E5E5;
+	padding: 5px 10px 5px 10px;
+	font-size: 14px;
+	float: right;
+}
+

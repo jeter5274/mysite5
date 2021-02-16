@@ -352,3 +352,45 @@ from (select rownum rn,
 where r.rn>=1
 and r.rn<=10;
 
+/******** mysite- gallery ********/
+
+--테이블/시퀀스 삭제
+drop table gallery;
+drop sequence seq_gallery_no;
+
+--테이블 생성
+create table gallery (
+    no number,
+    user_no number,
+    content varchar2(1000),
+    filePath varchar2(500),
+    orgName varchar2(200),
+    saveName varchar2(500),
+    fileSize number,
+    primary key (no),
+    constraint gallery_fk_un foreign key (user_no)
+    references users(no)
+);
+
+--시퀀스 생성
+create sequence seq_gallery_no
+increment by 1
+start with 1
+nocache;
+
+--데이터 삽입
+insert into gallery values(seq_gallery_no.nextval, 1, '이광수 사진', 'C:\javaStudy\upload\16134585455363b34192b-e5bf-49f6-83b6-5047e0a6f5c0.jpg', 'Lee-Kwang-soo.jpg', '16134585455363b34192b-e5bf-49f6-83b6-5047e0a6f5c0.jpg', 68001);
+insert into gallery values(seq_gallery_no.nextval, 1, '전소민 사진', 'C:\javaStudy\upload\161345873360933aad98f-3ed9-41ab-bd71-4c899c839318.jpg', 'JeonSoMin.jpg', '161345873360933aad98f-3ed9-41ab-bd71-4c899c839318.jpg', 79729);
+
+--커밋
+commit;
+
+--테이블 확인
+select  no,
+        user_no,
+        content,
+        filePath,
+        orgName,
+        saveName,
+        fileSize
+from gallery;
