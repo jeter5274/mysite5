@@ -94,7 +94,7 @@ public class GalleryService {
 	public Map<String, Object> setPaging(int crtPage, int postCnt, int pageBtnCnt) {
 		// postCnt => 페이지 당 글 갯수, pageBtnCnt => 페이지 버튼 갯수
 		
-		// **************************게시글 리스트
+		// **************************게시글 리스트 시작, 끝번호 연산
 		// crtPage 음수 오류 방지
 		crtPage = crtPage > 0 ? crtPage : 1;
 
