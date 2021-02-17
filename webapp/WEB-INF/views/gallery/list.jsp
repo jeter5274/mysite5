@@ -8,12 +8,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link href="${pageContext.request.contextPath }/assets/css/mysite.css" rel="stylesheet"
-	type="text/css">
-<link href="${pageContext.request.contextPath }/assets/css/gallery.css" rel="stylesheet"
-	type="text/css">
-<link href="${pageContext.request.contextPath }/assets/bootstrap/css/bootstrap.css" rel="stylesheet"
-	type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/mysite.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/gallery.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
@@ -60,7 +57,7 @@
 
 					<ul id="viewArea">
 
-						<c:forEach items="${galleryList }" var="galleryVo">
+						<c:forEach items="${pageMap.galleryList }" var="galleryVo">
 							<!-- 이미지반복영역 -->
 							<li data-no="${galleryVo.no}" 
 								data-content="${galleryVo.content}" 
@@ -78,13 +75,47 @@
 						</c:forEach>
 
 					</ul>
+					
+					<div class="clear"></div>
+				
+					<div id="paging">
+						<ul>
+							<c:if test="${pageMap.prev == true }">
+								<li><a href="${pageContext.request.contextPath }/gallery/list?crtPage=${pageMap.startPageNo-1}">◀</a></li>
+							</c:if>
+							
+							<c:forEach begin="${pageMap.startPageNo }" end="${pageMap.endPageNo }" step="1" var="page">
+								
+								<c:choose>
+									<c:when test="${(empty param.crtPage && page==1) || param.crtPage == page}">
+										<li class="active"><a href="${pageContext.request.contextPath }/gallery/list?crtPage=${page }">${page }</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="${pageContext.request.contextPath }/gallery/list?crtPage=${page }">${page }</a></li>
+									</c:otherwise>
+								</c:choose>
+									
+							</c:forEach>
+							
+							<c:if test="${pageMap.next == true }">
+								<li><a href="${pageContext.request.contextPath }/gallery/list?crtPage=${pageMap.endPageNo+1}">▶</a></li>
+							</c:if>
+						</ul>
+					</div>
+					<!-- //paging -->
+				
 				</div>
 				<!-- //list -->
+				
+		
 			</div>
 			<!-- //board -->
 		</div>
 		<!-- //content  -->
+		
 		<div class="clear"></div>
+		
+		
 
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		<!-- //footer -->

@@ -72,6 +72,23 @@
 	margin: 5px 5px 0px 5px;
 }
 
+/* 갤러리 페이징 */
+#gallery #list #paging {
+	margin: 0px auto;
+	width: 450px;
+}
+
+#gallery #list #paging ul {margin: 10px 5px 10px 5px;}
+#gallery #list #paging ul>li{
+	float: left;
+	margin: 0px 8px 0px 8px;
+}
+
+#gallery #paging ul>li.active{
+	font-size: 14px;
+	font-weight: bold;
+}
+
 /****************************************************************/
 /* 업로드 팝업   ************************************************/
 /****************************************************************/

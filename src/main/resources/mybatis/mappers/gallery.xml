@@ -16,6 +16,44 @@
 			        us.name as writer
 			from gallery ga, users us
 			where ga.user_no = us.no
+			order by ga.no desc
+		]]>
+	</select>
+	
+	<!-- 페이지 당 갯수에 맞춘 파일 리스트 셀렉 -->
+	<select id="selectOnePage" resultType="com.javaex.vo.GalleryVo">
+		<![CDATA[
+			select r.rn,
+        		   r.no,
+        		   r.userNo,
+        		   r.content,
+        		   r.filePath,
+        		   r.orgName,
+        		   r.saveName,
+        		   r.fileSize,
+        		   r.writer
+			from (select rownum rn,
+             			 o.no,
+             			 o.userNo,
+             			 o.content,
+             			 o.filePath,
+             			 o.orgName,
+             			 o.saveName,
+             			 o.fileSize,
+             			 o.writer
+			      from (select ga.no,
+							   ga.user_no as userNo,
+							   ga.content,
+							   ga.filePath,
+							   ga.orgName,
+							   ga.saveName,
+							   ga.fileSize,
+							   us.name as writer
+						from gallery ga, users us
+						where ga.user_no = us.no
+						order by ga.no desc) o) r
+			where r.rn >= #{startPostNo}
+			and r.rn <= #{endPostNo}
 		]]>
 	</select>
 
@@ -41,5 +79,13 @@
 			where no = #{no}	
 		]]>
 	</delete>
+	
+	<!-- 파일 리스트 갯수 -->
+	<select id="selectPostCnt" resultType="int">
+		<![CDATA[
+			select count(*)
+			from gallery
+		]]>
+	</select>
 	
 </mapper>

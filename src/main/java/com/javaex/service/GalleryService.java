@@ -4,7 +4,9 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,65 @@ public class GalleryService {
 	private GalleryDao galleryDao;
 	
 	//리스트
-	public List<GalleryVo> getList(){
+	public Map<String, Object> getList(int crtPage){
 		System.out.println("[GalleryService] getList");
 		
-		return galleryDao.selectList();
+		//**************************게시글 리스트
+		//페이지 당 글 갯수
+		int postCnt = 8;
+		
+		//crtPage 음수 오류 방지
+		crtPage = crtPage > 0 ? crtPage : 1;  
+		
+		//시작글 번호 1/9/17 ...
+ 		int startPostNo = postCnt*(crtPage-1) + 1;
+		
+		//끝 글 번호 8/16/24 ...
+ 		int endPostNo = startPostNo + postCnt - 1;
+ 		
+ 		//System.out.println("crtPage: " +crtPage+ " startPostNo: " +startPostNo+ " endPostNo: "+ endPostNo);
+ 		
+ 		List<GalleryVo> galleryList = galleryDao.selectList(startPostNo, endPostNo);
+ 		
+ 		//**************************페이징
+ 		//페이지 갯수
+ 		int pageCnt = 10;
+ 		
+ 		//끝 페이지 번호
+ 		int endPageNo = (int)Math.ceil(crtPage/(double)pageCnt) * pageCnt;
+
+ 		//시작 페이지 번호
+ 		int startPageNo = endPageNo - pageCnt + 1;
+ 		
+ 		//전체글 갯수
+ 		int totalPostCnt = galleryDao.selectPostCnt();
+ 		System.out.println(totalPostCnt);
+ 		//이전, 다음버튼
+ 		boolean prev, next;
+ 		
+ 		if(startPageNo != 1) {
+ 			prev = true;
+ 		}else {
+ 			prev = false;
+ 		}
+ 		
+ 		if(endPageNo*postCnt < totalPostCnt) {
+ 			next = true;
+ 		}else {
+ 			next = false;
+ 			endPageNo = (int)Math.ceil(totalPostCnt/(double)pageCnt);
+ 		}
+ 		
+ 		//System.out.println("startPageNo: " +startPageNo+ ", endPageNo: " +endPageNo+ ", prev: " +prev+ ", next: " +next);
+ 		//맵으로 데이터를 객체화
+ 		Map<String, Object> pageMap = new HashMap<String, Object>();
+ 		pageMap.put("galleryList", galleryList);
+ 		pageMap.put("startPageNo", startPageNo);
+ 		pageMap.put("endPageNo", endPageNo);
+ 		pageMap.put("prev", prev);
+ 		pageMap.put("next", next);
+ 		
+		return pageMap;
 	}
 	
 	//업로드

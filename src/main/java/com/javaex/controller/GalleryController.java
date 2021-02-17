@@ -24,10 +24,11 @@ public class GalleryController {
 	
 	//전체 리스트 출력
 	@RequestMapping(value="/list", method = {RequestMethod.GET, RequestMethod.POST})
-	public String list(Model model) {
+	public String list(@RequestParam(value="crtPage", required = false, defaultValue = "1") int crtPage,
+					   Model model) {
 		System.out.println("[GalleryController] list");
 		
-		model.addAttribute("galleryList", galleryService.getList());		
+		model.addAttribute("pageMap", galleryService.getList(crtPage));		
 		
 		return "gallery/list";
 	}

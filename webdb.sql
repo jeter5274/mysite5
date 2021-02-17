@@ -379,8 +379,14 @@ start with 1
 nocache;
 
 --데이터 삽입
+insert into gallery values(seq_gallery_no.nextval, 3, '이광수 사진', 'C:\javaStudy\upload\16134585455363b34192b-e5bf-49f6-83b6-5047e0a6f5c0.jpg', 'Lee-Kwang-soo.jpg', '16134585455363b34192b-e5bf-49f6-83b6-5047e0a6f5c0.jpg', 68001);
+insert into gallery values(seq_gallery_no.nextval, 4, '전소민 사진', 'C:\javaStudy\upload\161345873360933aad98f-3ed9-41ab-bd71-4c899c839318.jpg', 'JeonSoMin.jpg', '161345873360933aad98f-3ed9-41ab-bd71-4c899c839318.jpg', 79729);
+insert into gallery values(seq_gallery_no.nextval, 5, '이광수 사진', 'C:\javaStudy\upload\16134585455363b34192b-e5bf-49f6-83b6-5047e0a6f5c0.jpg', 'Lee-Kwang-soo.jpg', '16134585455363b34192b-e5bf-49f6-83b6-5047e0a6f5c0.jpg', 68001);
+insert into gallery values(seq_gallery_no.nextval, 6, '전소민 사진', 'C:\javaStudy\upload\161345873360933aad98f-3ed9-41ab-bd71-4c899c839318.jpg', 'JeonSoMin.jpg', '161345873360933aad98f-3ed9-41ab-bd71-4c899c839318.jpg', 79729);
+insert into gallery values(seq_gallery_no.nextval, 2, '이광수 사진', 'C:\javaStudy\upload\16134585455363b34192b-e5bf-49f6-83b6-5047e0a6f5c0.jpg', 'Lee-Kwang-soo.jpg', '16134585455363b34192b-e5bf-49f6-83b6-5047e0a6f5c0.jpg', 68001);
+insert into gallery values(seq_gallery_no.nextval, 3, '전소민 사진', 'C:\javaStudy\upload\161345873360933aad98f-3ed9-41ab-bd71-4c899c839318.jpg', 'JeonSoMin.jpg', '161345873360933aad98f-3ed9-41ab-bd71-4c899c839318.jpg', 79729);
 insert into gallery values(seq_gallery_no.nextval, 1, '이광수 사진', 'C:\javaStudy\upload\16134585455363b34192b-e5bf-49f6-83b6-5047e0a6f5c0.jpg', 'Lee-Kwang-soo.jpg', '16134585455363b34192b-e5bf-49f6-83b6-5047e0a6f5c0.jpg', 68001);
-insert into gallery values(seq_gallery_no.nextval, 1, '전소민 사진', 'C:\javaStudy\upload\161345873360933aad98f-3ed9-41ab-bd71-4c899c839318.jpg', 'JeonSoMin.jpg', '161345873360933aad98f-3ed9-41ab-bd71-4c899c839318.jpg', 79729);
+insert into gallery values(seq_gallery_no.nextval, 4, '전소민 사진', 'C:\javaStudy\upload\161345873360933aad98f-3ed9-41ab-bd71-4c899c839318.jpg', 'JeonSoMin.jpg', '161345873360933aad98f-3ed9-41ab-bd71-4c899c839318.jpg', 79729);
 
 --커밋
 commit;
@@ -413,3 +419,41 @@ where no = 4;
 
 --롤백
 rollback;
+
+--글 갯수 확인
+select count(*)
+from gallery;
+
+
+--rownum 갤러리 리스트 셀렉
+select  r.rn,
+        r.no,
+        r.userNo,
+        r.content,
+        r.filePath,
+        r.orgName,
+        r.saveName,
+        r.fileSize,
+        r.writer
+from (select rownum rn,
+             o.no,
+             o.userNo,
+             o.content,
+             o.filePath,
+             o.orgName,
+             o.saveName,
+             o.fileSize,
+             o.writer
+      from (select ga.no,
+                   ga.user_no as userNo,
+                   ga.content,
+                   ga.filePath,
+                   ga.orgName,
+                   ga.saveName,
+                   ga.fileSize,
+                   us.name as writer
+            from gallery ga, users us
+            where ga.user_no = us.no
+            order by ga.no desc) o) r
+where r.rn >= 1
+and r.rn <= 8;
