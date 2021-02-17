@@ -24,12 +24,13 @@ public class GalleryDao {
 	}
 	
 	//페이지 당 갯수에 맞춘 리스트 셀렉트
-	public List<GalleryVo> selectList(int startPostNo, int endPostNo){
-		System.out.println("[GalleryDao] selectList(startPostNo, endPostNo)");
+	public List<GalleryVo> selectList(int startPostNo, int endPostNo, String keyword){
+		System.out.println("[GalleryDao] selectList(startPostNo, endPostNo, keyword)");
 		
 		Map<String, Object> pageMap = new HashMap<String, Object>();
 		pageMap.put("startPostNo", startPostNo);
 		pageMap.put("endPostNo", endPostNo);
+		pageMap.put("keyword", keyword);
 		
 		return sqlSession.selectList("gallery.selectOnePage", pageMap);
 	}
@@ -50,10 +51,10 @@ public class GalleryDao {
 	}
 	
 	//글 갯수
-	public int selectPostCnt() {
+	public int selectPostCnt(String keyword) {
 		System.out.println("[GalleryDao] selectPostCnt");
 
-		return sqlSession.selectOne("gallery.selectPostCnt");
+		return sqlSession.selectOne("gallery.selectPostCnt", keyword);
 	}
 	
 	

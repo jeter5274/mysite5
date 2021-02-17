@@ -49,12 +49,21 @@
 
 			<div id="gallery">
 				<div id="list">
-
+				
+					<form action="${pageContext.request.contextPath }/gallery/list" method="get">
+						<div id="searchForm">
+							<input type="text" name="keyword">
+							<button type="submit" id="btn_search">검색</button>
+						</div>
+						
+					</form>
+					
 					<c:if test="${authUser != null }">
 						<button id="btnImgUpload">이미지올리기</button>
-						<div class="clear"></div>
 					</c:if>
-
+					
+					<div class="clear"></div>
+						
 					<ul id="viewArea">
 
 						<c:forEach items="${pageMap.galleryList }" var="galleryVo">
@@ -81,24 +90,24 @@
 					<div id="paging">
 						<ul>
 							<c:if test="${pageMap.prev == true }">
-								<li><a href="${pageContext.request.contextPath }/gallery/list?crtPage=${pageMap.startPageNo-1}">◀</a></li>
+								<li><a href="${pageContext.request.contextPath }/gallery/list?crtPage=${pageMap.startPageNo-1}&keyword=${param.keyword}">◀</a></li>
 							</c:if>
 							
 							<c:forEach begin="${pageMap.startPageNo }" end="${pageMap.endPageNo }" step="1" var="page">
 								
 								<c:choose>
 									<c:when test="${(empty param.crtPage && page==1) || param.crtPage == page}">
-										<li class="active"><a href="${pageContext.request.contextPath }/gallery/list?crtPage=${page }">${page }</a></li>
+										<li class="active"><a href="${pageContext.request.contextPath }/gallery/list?crtPage=${page }&keyword=${param.keyword}">${page }</a></li>
 									</c:when>
 									<c:otherwise>
-										<li><a href="${pageContext.request.contextPath }/gallery/list?crtPage=${page }">${page }</a></li>
+										<li><a href="${pageContext.request.contextPath }/gallery/list?crtPage=${page }&keyword=${param.keyword}">${page }</a></li>
 									</c:otherwise>
 								</c:choose>
 									
 							</c:forEach>
 							
 							<c:if test="${pageMap.next == true }">
-								<li><a href="${pageContext.request.contextPath }/gallery/list?crtPage=${pageMap.endPageNo+1}">▶</a></li>
+								<li><a href="${pageContext.request.contextPath }/gallery/list?crtPage=${pageMap.endPageNo+1}&keyword=${param.keyword}">▶</a></li>
 							</c:if>
 						</ul>
 					</div>

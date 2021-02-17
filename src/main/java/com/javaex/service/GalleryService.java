@@ -22,13 +22,17 @@ public class GalleryService {
 	private GalleryDao galleryDao;
 
 	// 리스트
-	public Map<String, Object> getList(int crtPage) {
+	public Map<String, Object> getList(int crtPage, String keyword) {
 		System.out.println("[GalleryService] getList");
 
-		//setPaging(현재페이지, 페이지 당 글 갯수, 페이징 버튼 갯수)
-		Map<String, Object> pageMap = setPaging(crtPage, 12, 10);
+		// 전체글 갯수
+		int totalPostCnt = galleryDao.selectPostCnt(keyword);
+		System.out.println(totalPostCnt);
 		
-		pageMap.put("galleryList", galleryDao.selectList((int)pageMap.get("startPostNo"), (int)pageMap.get("endPostNo")));
+		//setPaging(현재페이지, 페이지 당 글 갯수, 페이징 버튼 갯수, 전체 글 갯수)
+		Map<String, Object> pageMap = setPaging(crtPage, 12, 10, totalPostCnt);
+		
+		pageMap.put("galleryList", galleryDao.selectList((int)pageMap.get("startPostNo"), (int)pageMap.get("endPostNo"), keyword));
 		
 		return pageMap;
 	}
@@ -91,7 +95,7 @@ public class GalleryService {
 	}
 
 	//페이징 메소드
-	public Map<String, Object> setPaging(int crtPage, int postCnt, int pageBtnCnt) {
+	public Map<String, Object> setPaging(int crtPage, int postCnt, int pageBtnCnt, int totalPostCnt) {
 		// postCnt => 페이지 당 글 갯수, pageBtnCnt => 페이지 버튼 갯수
 		
 		// **************************게시글 리스트 시작, 끝번호 연산
@@ -110,10 +114,6 @@ public class GalleryService {
 
 		// 시작 페이지 번호
 		int startPageNo = endPageNo - pageBtnCnt + 1;
-
-		// 전체글 갯수
-		int totalPostCnt = galleryDao.selectPostCnt();
-		System.out.println(totalPostCnt);
 		
 		// 이전, 다음버튼
 		boolean prev, next;
