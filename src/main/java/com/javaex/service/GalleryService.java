@@ -69,7 +69,7 @@ public class GalleryService {
  			next = true;
  		}else {
  			next = false;
- 			endPageNo = (int)Math.ceil(totalPostCnt/(double)pageCnt);
+ 			endPageNo = (int)Math.ceil(totalPostCnt/(double)postCnt);
  		}
  		
  		//System.out.println("startPageNo: " +startPageNo+ ", endPageNo: " +endPageNo+ ", prev: " +prev+ ", next: " +next);
